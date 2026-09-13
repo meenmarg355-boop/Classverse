@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLASSVERSE — Class 9 (2026–27) | One Journey. One Legacy.</title>
+  <meta name="description" content="CLASSVERSE — Digital yearbook, member portfolio & preparation matrix for Class 9." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700;900&family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* -------------------------------------------------------------
+       CSS TOKENS & SYSTEM VARIABLES
+    ------------------------------------------------------------- */
+    :root {
+      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-cinematic: 'Cinzel', serif;
+
+      --bg-primary: #030712;
+      --bg-secondary: #080e21;
+      --surface-glass: rgba(13, 22, 44, 0.65);
+      --surface-glass-border: rgba(255, 255, 255, 0.08);
+      --surface-hover-border: rgba(99, 102, 241, 0.55);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      --accent-cyan: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-purple: #a855f7;
+      --accent-green: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-gold: #f59e0b;
+      --gradient-text: linear-gradient(135deg, #ffffff 15%, #93c5fd 55%, #c084fc 100%);
+      --gradient-jee: linear-gradient(135deg, #38bdf8 0%, #6366f1 50%, #f43f5e 100%);
+      --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --nav-glass: rgba(3, 7, 18, 0.75);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --surface-glass: rgba(255, 255, 255, 0.85);
+      --surface-glass-border: rgba(0, 0, 0, 0.08);
+      --surface-hover-border: rgba(99, 102, 241, 0.6);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --gradient-text: linear-gradient(135deg, #0f172a 15%, #2563eb 55%, #7c3aed 100%);
+      --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      --nav-glass: rgba(255, 255, 255, 0.88);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      overflow-x: hidden;
+      background-color: var(--bg-primary);
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background-color: var(--bg-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    ::selection {
+      background: var(--accent-indigo);
+      color: #fff;
+    }
+
+    /* -------------------------------------------------------------
+       SECURITY VAULT LOCK SCREEN
+    ------------------------------------------------------------- */
+    #security-vault-gate {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #0b132b 0%, #02040a 100%);
+      z-index: 1000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s ease;
+    }
+    #security-vault-gate.unlocked {
+      opacity: 0;
+      transform: scale(1.06);
+      pointer-events: none;
+    }
+
+    .vault-box {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(13, 22, 44, 0.7);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 28px;
+      padding: 44px 32px;
+      text-align: center;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      position: relative;
+    }
+    .vault-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
+    }
+    .vault-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.25));
+      border: 1px solid var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--accent-cyan);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+    }
+    .vault-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .vault-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+    }
+    .vault-input {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid var(--surface-glass-border);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+      outline: none;
+      transition: all 0.25s ease;
+      margin-bottom: 16px;
+    }
+    .vault-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .vault-btn {
+      width: 100%;
+      padding: 15px 24px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      border: none;
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+    }
+    .vault-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.7);
+    }
+    .vault-err-msg {
+      color: #f43f5e;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 14px;
+      display: none;
+    }
+
+    /* -------------------------------------------------------------
+       USER FLOATING STATUS & EDIT PILL
+    ------------------------------------------------------------- */
+    #user-session-pill {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      z-index: 10000;
+      background: rgba(13, 22, 44, 0.85);
+      backdrop-filter: blur(14px);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 0.84rem;
+      font-weight: 700;
+      border: 1.5px solid var(--accent-cyan);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s ease;
+    }
+    #user-session-pill:hover {
+      transform: scale(1.05);
+      border-color: var(--accent-purple);
+    }
+
+    /* -------------------------------------------------------------
+       STUDENT PERSONAL PROFILE EDITOR MODAL
+    ------------------------------------------------------------- */
+    #student-edit-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 100010;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #student-edit-modal.active { display: flex; }
+    .student-edit-box {
+      width: 100%;
+      max-width: 500px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--surface-hover-border);
+      border-radius: 24px;
+      padding: 34px 28px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      position: relative;
+    }
+
+    /* -------------------------------------------------------------
+       LEADER LIVE PREVIEW CONTROL DOCK (SIDE DRAWER)
+    ------------------------------------------------------------- */
+    #leader-control-dock {
+      position: fixed;
+      top: 0;
+      right: -520px;
+      width: min(500px, 92vw);
+      height: 100vh;
+      background: rgba(8, 14, 33, 0.88);
+      backdrop-filter: blur(24px);
+      border-left: 1px solid rgba(99, 102, 241, 0.4);
+      z-index: 100005;
+      box-shadow: -20px 0 50px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #leader-control-dock.open { right: 0; }
+    .dock-header {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--surface-glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .dock-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 26px 28px;
+    }
+    .dock-footer {
+      padding: 18px 28px;
+      border-top: 1px solid var(--surface-glass-border);
+      background: rgba(255, 255, 255, 0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Form Controls */
+    .dock-section-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dock-form-group { margin-bottom: 18px; }
+    .dock-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .dock-input, .dock-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-glass-border);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .dock-input:focus, .dock-textarea:focus { border-color: var(--accent-indigo); }
+
+    /* Scroll progress & top banner */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo), var(--accent-purple));
+      z-index: 10001;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.8);
+    }
+    #leader-live-banner {
+      display: none;
+      background: linear-gradient(90deg, #4f46e5, #9333ea);
+      color: #fff;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      position: relative;
+      z-index: 10002;
+    }
+    #leader-live-banner.active { display: block; }
+
+    /* Blobs */
+    .bg-gradient-mesh { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .glow-blob {
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35;
+      animation: floatBlob 22s infinite alternate ease-in-out;
+    }
+    .blob-1 { top: 10%; left: 15%; width: 500px; height: 500px; background: #4f46e5; }
+    .blob-2 { bottom: 20%; right: 10%; width: 650px; height: 650px; background: #7c3aed; animation-delay: -8s; }
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, -40px) scale(1.1); }
+      100% { transform: translate(-40px, 50px) scale(0.9); }
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 48px); max-width: 1320px; padding: 14px 28px;
+      border-radius: 999px; background: var(--nav-glass); backdrop-filter: blur(20px);
+      border: 1px solid var(--surface-glass-border); display: flex; align-items: center;
+      justify-content: space-between; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; color: var(--text-primary);
+    }
+    .nav-brand span { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; align-items: center; gap: 22px; list-style: none; }
+    .nav-links a {
+      color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; transition: color 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--accent-cyan); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+
+    .theme-toggle, .mobile-menu-btn {
+      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--surface-glass-border);
+      color: var(--text-primary); width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: all 0.25s ease;
+    }
+    .mobile-menu-btn { display: none; }
+
+    .mobile-menu {
+      position: fixed; top: 0; right: -100%; width: min(340px, 85vw); height: 100vh;
+      background: var(--bg-primary); border-left: 1px solid var(--surface-glass-border);
+      padding: 90px 36px 36px; display: flex; flex-direction: column; gap: 20px; z-index: 999;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { color: var(--text-primary); text-decoration: none; font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+
+    /* Sections */
+    section { position: relative; z-index: 1; padding: 120px 24px; max-width: 1300px; margin: 0 auto; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px;
+      background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--accent-cyan); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(2.3rem, 4.5vw, 3.8rem); font-weight: 800;
+      line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 18px; background: var(--gradient-text);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .section-desc { color: var(--text-secondary); font-size: 1.05rem; max-width: 640px; margin-bottom: 50px; }
+
+    .glass-card {
+      background: var(--surface-glass); backdrop-filter: blur(16px);
+      border: 1px solid var(--surface-glass-border); border-radius: 24px; box-shadow: var(--card-shadow);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+      position: relative; overflow: hidden;
+    }
+    .glass-card:hover { border-color: var(--surface-hover-border); box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25); }
+
+    /* Hero */
+    #hero {
+      position: relative; height: 100vh; min-height: 720px; padding: 0;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    .hero-bg-layer {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(to bottom, rgba(3, 7, 18, 0.45), var(--bg-primary)),
+                        url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=2000&q=80');
+      background-size: cover; background-position: center; transform: scale(1.08); filter: saturate(1.1) brightness(0.7); z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 900px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); border-radius: 999px;
+      font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.22em; color: #38bdf8; margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(3.6rem, 9.5vw, 8.5rem); font-weight: 900;
+      line-height: 0.95; margin-bottom: 24px; text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 30%, rgba(255, 255, 255, 0.5) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-tagline { font-family: var(--font-cinematic); font-size: clamp(1.1rem, 2.2vw, 1.8rem); color: #cbd5e1; letter-spacing: 0.12em; margin-bottom: 45px; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 12px; padding: 16px 36px;
+      background: linear-gradient(135deg, #4f46e5, #9333ea); border: none; color: #fff;
+      font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.15em;
+      text-decoration: none; border-radius: 999px; box-shadow: 0 0 35px rgba(99, 102, 241, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero-cta:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 0 55px rgba(168, 85, 247, 0.8); }
+
+    /* Members Grid */
+    .members-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+    .member-card {
+      padding: 40px 28px; display: flex; flex-direction: column; align-items: center;
+      text-align: center; cursor: pointer; position: relative;
+    }
+    .member-card::after {
+      content: 'Click to Inspect Syllabus & Tracker ↗'; position: absolute; bottom: 12px;
+      font-size: 0.75rem; font-weight: 700; color: var(--accent-cyan); letter-spacing: 0.05em;
+      opacity: 0; transform: translateY(6px); transition: all 0.3s ease;
+    }
+    .member-card:hover::after { opacity: 1; transform: translateY(0); }
+    
+    .member-avatar-wrap {
+      width: 180px; height: 180px; min-width: 180px; min-height: 180px; max-width: 180px; max-height: 180px;
+      border-radius: 50%; margin-bottom: 24px; position: relative; padding: 5px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); display: flex; align-items: center;
+      justify-content: center; overflow: hidden;
+    }
+    .member-avatar {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+      object-position: center; aspect-ratio: 1 / 1; background: #0f172a;
+      transition: transform 0.5s ease; display: block;
+    }
+    .member-card:hover .member-avatar { transform: scale(1.08); }
+
+    .member-badge {
+      display: inline-block; padding: 5px 16px; border-radius: 999px; background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--surface-glass-border); font-size: 0.76rem; font-weight: 700;
+      letter-spacing: 0.1em; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .member-name { font-family: var(--font-display); font-size: 1.55rem; font-weight: 700; margin-bottom: 8px; }
+    .member-quote {
+      font-family: var(--font-cinematic); font-size: 0.95rem; font-weight: 600; color: #93c5fd;
+      margin-bottom: 14px; line-height: 1.4;
+    }
+    .member-bio { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 12px; }
+
+    /* Subjects */
+    .subjects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px; max-width: 950px; margin: 0 auto;
+    }
+    .subject-card { padding: 40px 32px; display: flex; flex-direction: column; gap: 18px; }
+    .subject-icon {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.35); display: flex; align-items: center; justify-content: center;
+      font-size: 1.9rem; color: var(--accent-cyan);
+    }
+    .subject-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; }
+    .subject-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; }
+
+    /* Goal Section */
+    #goals { padding-top: 100px; padding-bottom: 120px; }
+    .goal-spotlight-card {
+      padding: 50px 40px; text-align: center; border: 1px solid rgba(99, 102, 241, 0.3);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(8, 14, 33, 0.9) 100%);
+      box-shadow: 0 25px 60px -15px rgba(99, 102, 241, 0.3); position: relative;
+    }
+    .goal-spotlight-card::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
+    }
+    .goal-hero-badge {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 999px;
+      background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24;
+      font-family: var(--font-display); font-size: 0.82rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .goal-main-title {
+      font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 900;
+      line-height: 1.1; margin-bottom: 14px; background: var(--gradient-jee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .goal-subtitle {
+      font-family: var(--font-cinematic); font-size: clamp(1.1rem, 2vw, 1.5rem);
+      color: #cbd5e1; letter-spacing: 0.1em; margin-bottom: 26px;
+    }
+    .goal-banner-pill {
+      display: inline-block; padding: 12px 30px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1px solid var(--accent-indigo); border-radius: 999px; font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 800; letter-spacing: 0.15em; color: var(--accent-cyan);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.35); margin-bottom: 40px;
+    }
+    .jee-milestone-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
+      text-align: left; margin-top: 20px;
+    }
+    .jee-card {
+      padding: 30px 26px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-glass-border);
+      border-radius: 20px; transition: all 0.3s ease;
+    }
+    .jee-card:hover { border-color: var(--accent-cyan); transform: translateY(-4px); }
+    .jee-year-badge {
+      font-family: var(--font-display); font-size: 0.82rem; font-weight: 800;
+      letter-spacing: 0.12em; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 8px; display: block;
+    }
+    .jee-card-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+    .jee-card-desc { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+
+    /* Timeline */
+    .timeline-container { position: relative; max-width: 860px; margin: 40px auto 0; }
+    .timeline-container::before {
+      content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+      background: linear-gradient(180deg, var(--accent-cyan), var(--accent-indigo), transparent);
+      transform: translateX(-50%);
+    }
+    .timeline-item { position: relative; margin-bottom: 50px; width: 50%; padding: 0 40px; }
+    .timeline-item:nth-child(odd) { left: 0; text-align: right; }
+    .timeline-item:nth-child(even) { left: 50%; text-align: left; }
+    .timeline-dot {
+      position: absolute; top: 18px; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent-cyan); box-shadow: 0 0 15px var(--accent-cyan); border: 3px solid var(--bg-primary);
+    }
+    .timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
+    .timeline-item:nth-child(even) .timeline-dot { left: -8px; }
+    .timeline-card { padding: 24px 28px; }
+
+    /* Quote */
+    #quote-parallax {
+      min-height: 55vh; display: flex; align-items: center; justify-content: center; text-align: center;
+      background: radial-gradient(circle at center, rgba(79, 70, 229, 0.18) 0%, transparent 70%);
+    }
+    .parallax-quote-text {
+      font-family: var(--font-cinematic); font-size: clamp(1.8rem, 4vw, 3.4rem); font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 20%, #cbd5e1 60%, #818cf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 0 20px;
+    }
+
+    footer { border-top: 1px solid var(--surface-glass-border); padding: 50px 24px 70px; text-align: center; }
+    .footer-brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; }
+
+    /* Student Preparation Dashboard */
+    #prep-dashboard {
+      position: fixed; inset: 0; background: var(--bg-primary); z-index: 99999;
+      overflow-y: auto; padding: 40px 24px 80px; display: none; opacity: 0;
+      transform: scale(0.98); transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    #prep-dashboard.active { display: block; opacity: 1; transform: scale(1); }
+    .prep-container { max-width: 1050px; margin: 0 auto; }
+    .prep-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 36px; padding-bottom: 20px; border-bottom: 1px solid var(--surface-glass-border);
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 22px;
+      border-radius: 999px; background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--surface-glass-border); color: var(--text-primary);
+      text-decoration: none; cursor: pointer; font-family: var(--font-display);
+      font-weight: 600; font-size: 0.9rem; transition: all 0.25s ease;
+    }
+    .back-btn:hover { background: var(--accent-indigo); color: #fff; transform: translateX(-4px); }
+    .prep-student-info { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
+    .prep-avatar-wrap {
+      width: 110px; height: 110px; border-radius: 50%; padding: 4px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.4); flex-shrink: 0;
+    }
+    .prep-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; aspect-ratio: 1 / 1; }
+
+    .prep-overall-card { padding: 28px; margin-bottom: 36px; display: flex; flex-direction: column; gap: 14px; }
+    .prep-progress-header { display: flex; justify-content: space-between; align-items: center; }
+    .prep-progress-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; }
+    .prep-progress-percent { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; color: var(--accent-cyan); }
+    .prep-progress-bar-bg { width: 100%; height: 12px; background: rgba(255, 255, 255, 0.1); border-radius: 999px; overflow: hidden; }
+    .prep-progress-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo), var(--accent-green));
+      border-radius: 999px; transition: width 0.4s ease;
+    }
+
+    .prep-subjects-layout {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+      gap: 30px; align-items: start;
+    }
+    .prep-subject-box { padding: 30px 26px; }
+    .prep-subject-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--surface-glass-border);
+    }
+    .prep-subject-title-area { display: flex; align-items: center; gap: 12px; }
+    .prep-subject-title-area h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; }
+
+    .part-toggle-bar {
+      display: inline-flex; background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--surface-glass-border); border-radius: 999px; padding: 3px; gap: 4px;
+    }
+    .part-tab-btn {
+      background: transparent; border: none; color: var(--text-secondary);
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+      padding: 6px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s ease;
+    }
+    .part-tab-btn.active {
+      background: var(--accent-indigo); color: #fff; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+    }
+
+    .coming-soon-box {
+      display: none; text-align: center; padding: 50px 24px; border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02); border: 1px dashed var(--surface-glass-border); margin-top: 10px;
+    }
+    .coming-soon-box.active { display: block; }
+    .coming-soon-icon { font-size: 3rem; color: var(--accent-purple); margin-bottom: 14px; display: inline-block; }
+    .coming-soon-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+    .coming-soon-subtitle { color: var(--text-muted); font-size: 0.9rem; max-width: 320px; margin: 0 auto; }
+
+    .chapter-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .chapter-item {
+      display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-glass-border);
+      border-radius: 14px; cursor: pointer; user-select: none; transition: all 0.2s ease; gap: 12px;
+    }
+    .chapter-item.read-only { cursor: not-allowed; opacity: 0.85; }
+    .chapter-item:hover:not(.read-only) { background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.35); }
+    .chapter-left { display: flex; align-items: center; gap: 12px; font-size: 0.92rem; font-weight: 500; line-height: 1.4; flex: 1; }
+    .chapter-number { font-family: var(--font-display); font-weight: 800; color: var(--accent-cyan); font-size: 0.85rem; min-width: 22px; }
+    .chapter-checkbox {
+      width: 20px; height: 20px; min-width: 20px; border-radius: 6px; border: 2px solid var(--text-muted);
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .chapter-item.completed .chapter-checkbox { background: var(--accent-green); border-color: var(--accent-green); color: #fff; }
+    .chapter-item.completed .chapter-name { color: var(--text-muted); text-decoration: line-through; }
+    .chapter-status-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+      padding: 4px 10px; border-radius: 999px; text-transform: uppercase; white-space: nowrap;
+    }
+    .status-done { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    @media (max-width: 992px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: flex; }
+      .prep-subjects-layout { grid-template-columns: 1fr; }
+      .prep-student-info { flex-direction: column; text-align: center; }
+      .prep-subject-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .timeline-container::before { left: 24px; }
+      .timeline-item { width: 100%; padding-left: 60px; text-align: left !important; }
+      .timeline-item:nth-child(even) { left: 0; }
+      .timeline-item:nth-child(odd) .timeline-dot,
+      .timeline-item:nth-child(even) .timeline-dot { left: 16px; right: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- -------------------------------------------------------------
+       1. SECURITY LOCK SCREEN (FIRST THING VISIBLE)
+  ------------------------------------------------------------- -->
+  <div id="security-vault-gate">
+    <div class="vault-box">
+      <div class="vault-icon">
+        <i class="ph-fill ph-shield-check"></i>
+      </div>
+      <h2 class="vault-title">CLASSVERSE</h2>
+      <p class="vault-subtitle">Enter your personal name or Leader key to unlock</p>
+      
+      <input type="password" id="vault-passcode-input" class="vault-input" placeholder="ENTER PASSWORD" onkeydown="if(event.key==='Enter') evaluateVaultAccess();" />
+
+      <button class="vault-btn" onclick="evaluateVaultAccess()">
+        UNLOCK ACCESS <i class="ph-bold ph-arrow-right"></i>
+      </button>
+
+      <div class="vault-err-msg" id="vault-err-msg">
+        <i class="ph-bold ph-x-circle"></i> Invalid Password. Access Denied.
+      </div>
+    </div>
+  </div>
+
+  <div id="scroll-progress"></div>
+
+  <!-- Live Notice Broadcast Bar -->
+  <div id="leader-live-banner">
+    <i class="ph-fill ph-megaphone-simple"></i> <span id="banner-text-display">NOTICE: Weekly Math & Science Mock Evaluation this Friday!</span>
+  </div>
+
+  <!-- Ambient Blobs -->
+  <div class="bg-gradient-mesh">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="#hero" class="nav-brand">
+      <i class="ph-bold ph-planet"></i>
+      <span>CLASSVERSE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#members">Squad</a></li>
+      <li><a href="#subjects">Favourite Subjects</a></li>
+      <li><a href="#goals">Goals</a></li>
+      <li><a href="#achievements">Timeline</a></li>
+      <li><a href="#quote-parallax">Quote</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+        <i class="ph-bold ph-moon" id="theme-icon"></i>
+      </button>
+      <button class="mobile-menu-btn" id="menu-btn" aria-label="Menu">
+        <i class="ph-bold ph-list"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <nav class="mobile-menu" id="mobile-drawer">
+    <a href="#hero" class="drawer-link">Home</a>
+    <a href="#members" class="drawer-link">Squad</a>
+    <a href="#subjects" class="drawer-link">Favourite Subjects</a>
+    <a href="#goals" class="drawer-link">Goals (IIT JEE)</a>
+    <a href="#achievements" class="drawer-link">Timeline</a>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <div class="hero-bg-layer" id="hero-bg"></div>
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="ph-fill ph-sparkle"></i> CLASS 9 • SESSION 2026–27
+      </div>
+      <h1 class="hero-title">CLASSVERSE</h1>
+      <p class="hero-tagline">“One Class. One Journey. One Legacy.”</p>
+      <a href="#members" class="hero-cta">
+        EXPLORE SQUAD <i class="ph-bold ph-arrow-down"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- MEMBERS SECTION (CLICKABLE) -->
+  <section id="members">
+    <div class="section-tag"><i class="ph-bold ph-users-four"></i> Squad</div>
+    <h2 class="section-title">THE CORE PILLARS</h2>
+    <p class="section-desc">Click on any profile card to inspect their live Class 9 subject syllabus & preparation status.</p>
+
+    <div class="members-grid">
+      
+      <!-- 1. SHABD PRAKASH SINGH -->
+      <div class="glass-card member-card" onclick="openPrep('shabd')">
+        <div class="member-avatar-wrap">
+          <img src="s.jpeg" alt="Shabd Prakash Singh" class="member-avatar" />
+        </div>
+        <span class="member-badge" id="card-badge-shabd">Creator & Leader</span>
+        <h3 class="member-name" id="card-name-shabd">Shabd Prakash Singh</h3>
+        <p class="member-quote" id="card-quote-shabd">“The Creative of the Website. The Leader of the Website.”</p>
+        <p class="member-bio" id="card-bio-shabd">Visionary architect behind CLASSVERSE. Synthesizing modern aesthetics, creative technology, and leadership to immortalize the class journey.</p>
+      </div>
+
+      <!-- 2. NITISH SINGH -->
+      <div class="glass-card member-card" onclick="openPrep('nitish')">
+        <div class="member-avatar-wrap">
+          <img src="n.jpeg" alt="Nitish Singh" class="member-avatar" />
+        </div>
+        <span class="member-badge" id="card-badge-nitish">Class Representative</span>
+        <h3 class="member-name" id="card-name-nitish">Nitish Singh</h3>
+        <p class="member-quote" id="card-quote-nitish">“Guiding With Focus. Leading By Example.”</p>
+        <p class="member-bio" id="card-bio-nitish">A composed, strategic thinker and charismatic leader. Anchoring the class through every academic challenge and collective milestone.</p>
+      </div>
+
+      <!-- 3. SHIVANSH SINGH -->
+      <div class="glass-card member-card" onclick="openPrep('shivansh')">
+        <div class="member-avatar-wrap">
+          <img src="sh.jpeg" alt="Shivansh Singh" class="member-avatar" />
+        </div>
+        <span class="member-badge" id="card-badge-shivansh">Sports Captain</span>
+        <h3 class="member-name" id="card-name-shivansh">Shivansh Singh</h3>
+        <p class="member-quote" id="card-quote-shivansh">“Relentless Pace. Unstoppable Spirit.”</p>
+        <p class="member-bio" id="card-bio-shivansh">Dynamic playmaker and football virtuoso. Fueling the class spirit with unmatched speed, tactical brilliance, and championship medals.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAVOURITE SUBJECTS SECTION -->
+  <section id="subjects">
+    <div class="section-tag"><i class="ph-bold ph-heart"></i> Passions</div>
+    <h2 class="section-title">FAVOURITE SUBJECTS</h2>
+    <p class="section-desc">The two cornerstone disciplines that fuel our intellect, curiosity, and analytical power.</p>
+
+    <div class="subjects-grid">
+      <div class="glass-card subject-card">
+        <div class="subject-icon"><i class="ph-bold ph-function"></i></div>
+        <h3 class="subject-title">Mathematics</h3>
+        <p class="subject-desc">Decoding complex coordinates, linear polynomials, algebraic identities, probability, and sequences with absolute logic.</p>
+      </div>
+
+      <div class="glass-card subject-card">
+        <div class="subject-icon"><i class="ph-bold ph-atom"></i></div>
+        <h3 class="subject-title">Science</h3>
+        <p class="subject-desc">Venturing from the inner workings of the living cell and atomic matter to cosmic forces, work, sound, and life diversity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOAL SECTION: IIT JEE MAINS & JEE ADVANCED -->
+  <section id="goals">
+    <div class="section-tag"><i class="ph-bold ph-target"></i> Vision & Ambition</div>
+    <h2 class="section-title">MISSION: IIT JEE</h2>
+    <p class="section-desc">The ultimate academic frontier. Laying foundational excellence in Class 9 to conquer India's most prestigious engineering entrance exams.</p>
+
+    <div class="glass-card goal-spotlight-card">
+      <div class="goal-hero-badge">
+        <i class="ph-fill ph-fire"></i> Target: Top IITs & Elite Engineering Institutes
+      </div>
+      
+      <h3 class="goal-main-title">JEE MAINS & JEE ADVANCED</h3>
+      <p class="goal-subtitle">Concept Mastery • Analytical Speed • Unyielding Determination</p>
+
+      <div class="goal-banner-pill" id="goal-pill-text">
+        <i class="ph-bold ph-sparkle"></i> COMING SOON IN 2029 & 2031
+      </div>
+
+      <div class="jee-milestone-grid">
+        <div class="jee-card">
+          <span class="jee-year-badge">Phase 1 • 2026–2027</span>
+          <h4 class="jee-card-title">Foundation & Core Logic</h4>
+          <p class="jee-card-desc">Building strong intuitive grasp over Class 9 & 10 Mathematics and Science to cement problem-solving speed.</p>
+        </div>
+
+        <div class="jee-card">
+          <span class="jee-year-badge" style="color: var(--accent-purple);">Target 1 • 2029</span>
+          <h4 class="jee-card-title">JEE Main & Advanced 2029</h4>
+          <p class="jee-card-desc">The primary breakthrough year. Setting benchmarks with top national percentiles in JEE Main & clearing JEE Advanced.</p>
+        </div>
+
+        <div class="jee-card">
+          <span class="jee-year-badge" style="color: #f43f5e;">Target 2 • 2031</span>
+          <h4 class="jee-card-title">Elite Advanced Mastery 2031</h4>
+          <p class="jee-card-desc">Ultimate engineering excellence, research frontiers, and premier technical breakthroughs in India's top IIT portals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS TIMELINE -->
+  <section id="achievements">
+    <div class="section-tag"><i class="ph-bold ph-trophy"></i> Milestones</div>
+    <h2 class="section-title">THE CHRONICLES</h2>
+    <p class="section-desc">Defining moments that shaped our collective legacy throughout 2026–27.</p>
+
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="glass-card timeline-card">
+          <span style="color:var(--accent-cyan); font-weight:700;">APRIL 2026</span>
+          <h4 style="margin:6px 0;">New Chapter Begins</h4>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Stepping into Class 9 with elevated ambition, teamwork, and fresh goals.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="glass-card timeline-card">
+          <span style="color:var(--accent-cyan); font-weight:700;">NOVEMBER 2026</span>
+          <h4 style="margin:6px 0;">Football Trophy Champions</h4>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Dominant clean-sheet victory in the inter-class football tournament.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLAX QUOTE -->
+  <div id="quote-parallax">
+    <h2 class="parallax-quote-text">
+      “We came as classmates, and became part of a story.”
+    </h2>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">CLASSVERSE</div>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">“Made with memories, friendship and teamwork.”</p>
+    <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">CLASSVERSE © 2026–27. All Rights Reserved.</p>
+  </footer>
+
+  <!-- -------------------------------------------------------------
+       USER FLOATING SESSION PILL
+  ------------------------------------------------------------- -->
+  <div id="user-session-pill" onclick="handleUserSessionClick()">
+    <i class="ph-bold ph-user-circle"></i> <span id="session-pill-text">Logged in</span>
+  </div>
+
+  <!-- -------------------------------------------------------------
+       STUDENT PERSONAL PROFILE EDIT MODAL
+  ------------------------------------------------------------- -->
+  <div id="student-edit-modal">
+    <div class="student-edit-box">
+      <button onclick="closeStudentModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+      <span class="section-tag" style="margin-bottom:10px;"><i class="ph-bold ph-pencil-simple"></i> Personal Profile</span>
+      <h3 style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:18px;" id="student-modal-title">Edit Your Profile</h3>
+
+      <div class="dock-form-group">
+        <label class="dock-label">Role Badge</label>
+        <input type="text" class="dock-input" id="self-badge-input" />
+      </div>
+
+      <div class="dock-form-group">
+        <label class="dock-label">Quote / Caption</label>
+        <input type="text" class="dock-input" id="self-quote-input" />
+      </div>
+
+      <div class="dock-form-group">
+        <label class="dock-label">Biography</label>
+        <textarea class="dock-textarea" id="self-bio-input" rows="3"></textarea>
+      </div>
+
+      <button class="vault-btn" onclick="savePersonalProfile()">
+        Save Changes <i class="ph-bold ph-check"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- -------------------------------------------------------------
+       LEADER LIVE PREVIEW CONTROL DOCK (SIDE DRAWER)
+  ------------------------------------------------------------- -->
+  <div id="leader-control-dock">
+    <div class="dock-header">
+      <div>
+        <span class="section-tag" style="margin-bottom:4px; padding:4px 12px; font-size:0.7rem;"><i class="ph-fill ph-shield-check"></i> MASTER COMMAND</span>
+        <h3 style="font-family:var(--font-display); font-size:1.3rem;">Leader Controller</h3>
+      </div>
+      <button onclick="toggleLeaderDock()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;" title="Minimize / View Full Page">&times;</button>
+    </div>
+
+    <div class="dock-body">
+      <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:20px;">
+        💡 <em>Type any change below to see the website update live in real-time.</em>
+      </p>
+
+      <!-- Live Broadcast Banner -->
+      <div class="dock-section-title"><i class="ph-bold ph-megaphone"></i> Live Announcement Banner</div>
+      <div class="dock-form-group">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.85rem; font-weight:600; margin-bottom:8px;">
+          <input type="checkbox" id="dock-banner-toggle" onchange="liveUpdateBanner()" /> Display Live Banner
+        </label>
+        <input type="text" class="dock-input" id="dock-banner-text" placeholder="Enter announcement..." oninput="liveUpdateBanner()" />
+      </div>
+
+      <hr style="border:none; border-top:1px solid var(--surface-glass-border); margin:24px 0;" />
+
+      <!-- Student Profiles -->
+      <div class="dock-section-title"><i class="ph-bold ph-user-gear"></i> Master Student Editor</div>
+      <div class="dock-form-group">
+        <label class="dock-label">Select Student</label>
+        <select class="dock-input" id="dock-student-select" onchange="loadDockStudent()">
+          <option value="shabd">Shabd Prakash Singh</option>
+          <option value="nitish">Nitish Singh</option>
+          <option value="shivansh">Shivansh Singh</option>
+        </select>
+      </div>
+
+      <div class="dock-form-group">
+        <label class="dock-label">Role Badge</label>
+        <input type="text" class="dock-input" id="dock-student-badge" oninput="liveUpdateStudent()" />
+      </div>
+
+      <div class="dock-form-group">
+        <label class="dock-label">Quote / Caption</label>
+        <input type="text" class="dock-input" id="dock-student-quote" oninput="liveUpdateStudent()" />
+      </div>
+
+      <div class="dock-form-group">
+        <label class="dock-label">Bio Description</label>
+        <textarea class="dock-textarea" id="dock-student-bio" rows="3" oninput="liveUpdateStudent()"></textarea>
+      </div>
+
+      <hr style="border:none; border-top:1px solid var(--surface-glass-border); margin:24px 0;" />
+
+      <!-- IIT JEE Goal Text -->
+      <div class="dock-section-title"><i class="ph-bold ph-target"></i> IIT JEE Target Pill</div>
+      <div class="dock-form-group">
+        <label class="dock-label">Badge Text</label>
+        <input type="text" class="dock-input" id="dock-goal-text" oninput="liveUpdateGoal()" />
+      </div>
+    </div>
+
+    <div class="dock-footer">
+      <button class="back-btn" style="padding:8px 18px; font-size:0.8rem;" onclick="toggleLeaderDock()">
+        <i class="ph-bold ph-eye"></i> Full Screen Preview
+      </button>
+      <button class="vault-btn" style="width:auto; padding:8px 18px; font-size:0.8rem;" onclick="saveDockData()">
+        Save Permanently
+      </button>
+    </div>
+  </div>
+
+  <!-- -------------------------------------------------------------
+       STUDENT PREPARATION DASHBOARD (CLICKED FROM CARDS)
+  ------------------------------------------------------------- -->
+  <div id="prep-dashboard">
+    <div class="prep-container">
+      <div class="prep-header">
+        <button class="back-btn" onclick="closePrep()">
+          <i class="ph-bold ph-arrow-left"></i> Return to CLASSVERSE
+        </button>
+        <span class="section-tag" style="margin: 0;"><i class="ph-bold ph-bookmarks"></i> Class 9 Syllabus Tracker</span>
+      </div>
+
+      <div class="prep-student-info">
+        <div class="prep-avatar-wrap">
+          <img src="" id="prep-img" alt="Student Profile" class="prep-avatar" />
+        </div>
+        <div>
+          <span class="member-badge" id="prep-badge"></span>
+          <h1 class="member-name" id="prep-name" style="font-size: 2.2rem; margin-bottom: 4px;"></h1>
+          <p class="member-quote" id="prep-quote" style="margin: 0;"></p>
+        </div>
+      </div>
+
+      <!-- Permission Status Tag -->
+      <div id="prep-access-alert" style="margin-bottom: 20px;"></div>
+
+      <div class="glass-card prep-overall-card">
+        <div class="prep-progress-header">
+          <div>
+            <div class="prep-progress-title">Overall Preparation Readiness</div>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">Track progress of Mathematics and Science chapters.</p>
+          </div>
+          <div class="prep-progress-percent" id="overall-percentage">0%</div>
+        </div>
+        <div class="prep-progress-bar-bg">
+          <div class="prep-progress-bar-fill" id="overall-bar"></div>
+        </div>
+      </div>
+
+      <div class="prep-subjects-layout">
+        
+        <!-- MATHEMATICS -->
+        <div class="glass-card prep-subject-box">
+          <div class="prep-subject-header">
+            <div class="prep-subject-title-area">
+              <div class="subject-icon" style="width: 46px; height: 46px; font-size: 1.3rem;">
+                <i class="ph-bold ph-function"></i>
+              </div>
+              <div>
+                <h3>Mathematics</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;" id="math-stat">0 / 8 Prepared</p>
+              </div>
+            </div>
+
+            <div class="part-toggle-bar">
+              <button class="part-tab-btn active" id="btn-part-a" onclick="switchMathPart('A')">Part A</button>
+              <button class="part-tab-btn" id="btn-part-b" onclick="switchMathPart('B')">Part B</button>
+            </div>
+          </div>
+
+          <ul class="chapter-list" id="math-list-part-a"></ul>
+
+          <div class="coming-soon-box" id="math-part-b-box">
+            <div class="coming-soon-icon"><i class="ph-bold ph-books"></i></div>
+            <h4 class="coming-soon-title">Textbook is coming soon</h4>
+            <p class="coming-soon-subtitle">Part B curriculum modules will unlock automatically once released.</p>
+          </div>
+        </div>
+
+        <!-- SCIENCE -->
+        <div class="glass-card prep-subject-box">
+          <div class="prep-subject-header">
+            <div class="prep-subject-title-area">
+              <div class="subject-icon" style="width: 46px; height: 46px; font-size: 1.3rem;">
+                <i class="ph-bold ph-atom"></i>
+              </div>
+              <div>
+                <h3>Science</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;" id="sci-stat">0 / 13 Prepared</p>
+              </div>
+            </div>
+          </div>
+          <ul class="chapter-list" id="sci-list"></ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // ROLE-BASED ACCESS CONTROL (RBAC) LOGIC
+    // -------------------------------------------------------------
+    let currentUserRole = null; // 'shabd' | 'nitish' | 'shivansh' | 'leader'
+
+    function evaluateVaultAccess() {
+      const input = document.getElementById('vault-passcode-input').value.trim();
+      const clean = input.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+      // 1. Shabd Access
+      if (clean === 'shabd' || clean === 'shabda') {
+        currentUserRole = 'shabd';
+        unlockVault();
+        initUserSession('Shabd Prakash Singh', 'shabd');
+      }
+      // 2. Nitish Access
+      else if (clean === 'nitish') {
+        currentUserRole = 'nitish';
+        unlockVault();
+        initUserSession('Nitish Singh', 'nitish');
+      }
+      // 3. Shivansh Access
+      else if (clean === 'shivansh') {
+        currentUserRole = 'shivansh';
+        unlockVault();
+        initUserSession('Shivansh Singh', 'shivansh');
+      }
+      // 4. Leader Master Key
+      else if (clean === '266311') {
+        currentUserRole = 'leader';
+        unlockVault();
+        initLeaderSession();
+      }
+      // Invalid Password
+      else {
+        const err = document.getElementById('vault-err-msg');
+        err.style.display = 'block';
+        document.getElementById('vault-passcode-input').style.borderColor = '#f43f5e';
+      }
+    }
+
+    function unlockVault() {
+      const gate = document.getElementById('security-vault-gate');
+      gate.classList.add('unlocked');
+      setTimeout(() => gate.style.display = 'none', 650);
+    }
+
+    // Initialize individual student session
+    function initUserSession(name, key) {
+      const pill = document.getElementById('user-session-pill');
+      const text = document.getElementById('session-pill-text');
+      pill.style.display = 'flex';
+      text.innerHTML = `Signed in: <strong>${name}</strong> (Click to Edit)`;
+    }
+
+    // Initialize leader session
+    function initLeaderSession() {
+      const pill = document.getElementById('user-session-pill');
+      const text = document.getElementById('session-pill-text');
+      pill.style.display = 'flex';
+      pill.style.background = 'linear-gradient(135deg, #4f46e5, #f43f5e)';
+      text.innerHTML = `<i class="ph-fill ph-crown"></i> <strong>Leader Console (Click to Control)</strong>`;
+
+      // Open dock automatically
+      document.getElementById('leader-control-dock').classList.add('open');
+      initDockControls();
+    }
+
+    function handleUserSessionClick() {
+      if (currentUserRole === 'leader') {
+        toggleLeaderDock();
+      } else {
+        openStudentModal(currentUserRole);
+      }
+    }
+
+    // Student Self-Profile Edit Modal
+    function openStudentModal(key) {
+      const modal = document.getElementById('student-edit-modal');
+      const student = studentsData[key];
+      document.getElementById('student-modal-title').innerText = `Edit Profile • ${student.name}`;
+      document.getElementById('self-badge-input').value = student.badge;
+      document.getElementById('self-quote-input').value = student.quote;
+      document.getElementById('self-bio-input').value = student.bio;
+      modal.classList.add('active');
+    }
+
+    function closeStudentModal() {
+      document.getElementById('student-edit-modal').classList.remove('active');
+    }
+
+    function savePersonalProfile() {
+      const key = currentUserRole;
+      studentsData[key].badge = document.getElementById('self-badge-input').value;
+      studentsData[key].quote = document.getElementById('self-quote-input').value;
+      studentsData[key].bio = document.getElementById('self-bio-input').value;
+
+      localStorage.setItem('classverse_profile_custom_' + key, JSON.stringify({
+        badge: studentsData[key].badge,
+        quote: studentsData[key].quote,
+        bio: studentsData[key].bio
+      }));
+
+      // Update card on page immediately
+      document.getElementById('card-badge-' + key).innerText = studentsData[key].badge;
+      document.getElementById('card-quote-' + key).innerText = studentsData[key].quote;
+      document.getElementById('card-bio-' + key).innerText = studentsData[key].bio;
+
+      closeStudentModal();
+      alert('✅ Your profile has been updated successfully!');
+    }
+
+    // -------------------------------------------------------------
+    // LEADER LIVE PREVIEW DOCK FUNCTIONS
+    // -------------------------------------------------------------
+    function toggleLeaderDock() {
+      document.getElementById('leader-control-dock').classList.toggle('open');
+    }
+
+    function initDockControls() {
+      document.getElementById('dock-banner-toggle').checked = localStorage.getItem('classverse_banner_active') === 'true';
+      document.getElementById('dock-banner-text').value = localStorage.getItem('classverse_banner_text') || "NOTICE: Weekly Math & Science Mock Evaluation this Friday!";
+      document.getElementById('dock-goal-text').value = localStorage.getItem('classverse_goal_text') || "COMING SOON IN 2029 & 2031";
+      loadDockStudent();
+    }
+
+    function loadDockStudent() {
+      const key = document.getElementById('dock-student-select').value;
+      const student = studentsData[key];
+      document.getElementById('dock-student-badge').value = student.badge;
+      document.getElementById('dock-student-quote').value = student.quote;
+      document.getElementById('dock-student-bio').value = student.bio;
+    }
+
+    function liveUpdateBanner() {
+      const active = document.getElementById('dock-banner-toggle').checked;
+      const text = document.getElementById('dock-banner-text').value;
+      const banner = document.getElementById('leader-live-banner');
+      const textDisplay = document.getElementById('banner-text-display');
+
+      if (active) {
+        banner.classList.add('active');
+        textDisplay.innerText = text;
+      } else {
+        banner.classList.remove('active');
+      }
+    }
+
+    function liveUpdateStudent() {
+      const key = document.getElementById('dock-student-select').value;
+      const badgeVal = document.getElementById('dock-student-badge').value;
+      const quoteVal = document.getElementById('dock-student-quote').value;
+      const bioVal = document.getElementById('dock-student-bio').value;
+
+      studentsData[key].badge = badgeVal;
+      studentsData[key].quote = quoteVal;
+      studentsData[key].bio = bioVal;
+
+      document.getElementById('card-badge-' + key).innerText = badgeVal;
+      document.getElementById('card-quote-' + key).innerText = quoteVal;
+      document.getElementById('card-bio-' + key).innerText = bioVal;
+    }
+
+    function liveUpdateGoal() {
+      const text = document.getElementById('dock-goal-text').value;
+      document.getElementById('goal-pill-text').innerHTML = `<i class="ph-bold ph-sparkle"></i> ${text}`;
+    }
+
+    function saveDockData() {
+      localStorage.setItem('classverse_banner_active', document.getElementById('dock-banner-toggle').checked);
+      localStorage.setItem('classverse_banner_text', document.getElementById('dock-banner-text').value);
+      localStorage.setItem('classverse_goal_text', document.getElementById('dock-goal-text').value);
+
+      ['shabd', 'nitish', 'shivansh'].forEach(k => {
+        localStorage.setItem('classverse_profile_custom_' + k, JSON.stringify({
+          badge: studentsData[k].badge,
+          quote: studentsData[k].quote,
+          bio: studentsData[k].bio
+        }));
+      });
+
+      alert('✅ Leader Changes Saved Permanently!');
+    }
+
+    // -------------------------------------------------------------
+    // PREPARATION SYLLABUS DATA
+    // -------------------------------------------------------------
+    const defaultMathChapters = [
+      { id: 1, name: "Orienting Yourself: The Use of Coordinates", done: true },
+      { id: 2, name: "Introduction to Linear Polynomials", done: true },
+      { id: 3, name: "The World of Numbers", done: true },
+      { id: 4, name: "Exploring Algebraic Identities", done: true },
+      { id: 5, name: "I'm Up and Down, and Round and Round", done: true },
+      { id: 6, name: "Measuring Space: Perimeter and Area", done: false },
+      { id: 7, name: "The Mathematics of Maybe: Introduction to Probability", done: false },
+      { id: 8, name: "Predicting What Comes Next: Exploring Sequences and Progressions", done: false }
+    ];
+
+    const defaultScienceChapters = [
+      { id: 1, name: "Exploration: Entering the World of Secondary Science", done: true },
+      { id: 2, name: "Cell: The Building Block of Life", done: true },
+      { id: 3, name: "Tissues in Action", done: true },
+      { id: 4, name: "Describing Motion Around Us", done: true },
+      { id: 5, name: "Exploring Mixtures and their Separation", done: true },
+      { id: 6, name: "How Forces Affect Motion", done: true },
+      { id: 7, name: "Work, Energy, and Simple Machines", done: false },
+      { id: 8, name: "Journey Inside the Atom", done: true },
+      { id: 9, name: "Atomic Foundations of Matter", done: false },
+      { id: 10, name: "Sound Waves: Characteristics and Applications", done: false },
+      { id: 11, name: "Reproduction: How Life Continues", done: true },
+      { id: 12, name: "Patterns in Life: Diversity and Classification", done: false },
+      { id: 13, name: "Earth as a System: Energy, Matter, and Life", done: false }
+    ];
+
+    const studentsData = {
+      shabd: {
+        name: "Shabd Prakash Singh",
+        badge: "Creator & Leader",
+        quote: "“The Creative of the Website. The Leader of the Website.”",
+        bio: "Visionary architect behind CLASSVERSE. Synthesizing modern aesthetics, creative technology, and leadership to immortalize the class journey.",
+        image: "s.jpeg",
+        math: JSON.parse(JSON.stringify(defaultMathChapters)),
+        science: JSON.parse(JSON.stringify(defaultScienceChapters))
+      },
+      nitish: {
+        name: "Nitish Singh",
+        badge: "Class Representative",
+        quote: "“Guiding With Focus. Leading By Example.”",
+        bio: "A composed, strategic thinker and charismatic leader. Anchoring the class through every academic challenge and collective milestone.",
+        image: "n.jpeg",
+        math: JSON.parse(JSON.stringify(defaultMathChapters)),
+        science: JSON.parse(JSON.stringify(defaultScienceChapters))
+      },
+      shivansh: {
+        name: "Shivansh Singh",
+        badge: "Sports Captain",
+        quote: "“Relentless Pace. Unstoppable Spirit.”",
+        bio: "Dynamic playmaker and football virtuoso. Fueling the class spirit with unmatched speed, tactical brilliance, and championship medals.",
+        image: "sh.jpeg",
+        math: JSON.parse(JSON.stringify(defaultMathChapters)),
+        science: JSON.parse(JSON.stringify(defaultScienceChapters))
+      }
+    };
+
+    let currentOpenStudent = null;
+    let activeMathPart = 'A';
+
+    function loadSavedData(key) {
+      const saved = localStorage.getItem('classverse_prep_v6_' + key);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          studentsData[key].math = parsed.math;
+          studentsData[key].science = parsed.science;
+        } catch(e){}
+      }
+    }
+
+    function saveCurrentData() {
+      if (!currentOpenStudent) return;
+      localStorage.setItem('classverse_prep_v6_' + currentOpenStudent, JSON.stringify({
+        math: studentsData[currentOpenStudent].math,
+        science: studentsData[currentOpenStudent].science
+      }));
+    }
+
+    function openPrep(studentKey) {
+      currentOpenStudent = studentKey;
+      loadSavedData(studentKey);
+      const student = studentsData[studentKey];
+
+      document.getElementById('prep-img').src = student.image;
+      document.getElementById('prep-name').innerText = student.name;
+      document.getElementById('prep-badge').innerText = student.badge;
+      document.getElementById('prep-quote').innerText = student.quote;
+
+      // Access banner in prep modal
+      const alertEl = document.getElementById('prep-access-alert');
+      const canEdit = (currentUserRole === 'leader' || currentUserRole === studentKey);
+
+      if (canEdit) {
+        alertEl.innerHTML = `<span class="section-tag" style="background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.3); color:var(--accent-green);">
+          <i class="ph-bold ph-lock-open"></i> Full Edit Access (${currentUserRole === 'leader' ? 'Leader Mode' : 'Your Personal Preparation'})
+        </span>`;
+      } else {
+        alertEl.innerHTML = `<span class="section-tag" style="background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.3); color:#fbbf24;">
+          <i class="ph-bold ph-lock-key"></i> View-Only Mode (Only ${student.name} or Leader can check items)
+        </span>`;
+      }
+
+      activeMathPart = 'A';
+      updateMathPartDisplay();
+      renderChapters();
+
+      const dashboard = document.getElementById('prep-dashboard');
+      dashboard.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    }
+
+    function closePrep() {
+      const dashboard = document.getElementById('prep-dashboard');
+      dashboard.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    function switchMathPart(part) {
+      activeMathPart = part;
+      updateMathPartDisplay();
+    }
+
+    function updateMathPartDisplay() {
+      const btnA = document.getElementById('btn-part-a');
+      const btnB = document.getElementById('btn-part-b');
+      const listA = document.getElementById('math-list-part-a');
+      const boxB = document.getElementById('math-part-b-box');
+
+      if (activeMathPart === 'A') {
+        btnA.classList.add('active');
+        btnB.classList.remove('active');
+        listA.style.display = 'flex';
+        boxB.classList.remove('active');
+      } else {
+        btnB.classList.add('active');
+        btnA.classList.remove('active');
+        listA.style.display = 'none';
+        boxB.classList.add('active');
+      }
+    }
+
+    function toggleChapter(subject, index) {
+      const canEdit = (currentUserRole === 'leader' || currentUserRole === currentOpenStudent);
+      if (!canEdit) {
+        alert('🔒 View-Only Mode: You can only edit your own preparation tracker!');
+        return;
+      }
+      const list = studentsData[currentOpenStudent][subject];
+      list[index].done = !list[index].done;
+      saveCurrentData();
+      renderChapters();
+    }
+
+    function renderChapters() {
+      const student = studentsData[currentOpenStudent];
+      const mathList = document.getElementById('math-list-part-a');
+      const sciList = document.getElementById('sci-list');
+      const canEdit = (currentUserRole === 'leader' || currentUserRole === currentOpenStudent);
+
+      mathList.innerHTML = '';
+      sciList.innerHTML = '';
+
+      let mathDoneCount = 0;
+      let sciDoneCount = 0;
+
+      // Math
+      student.math.forEach((ch, idx) => {
+        if (ch.done) mathDoneCount++;
+        const li = document.createElement('li');
+        li.className = `chapter-item ${ch.done ? 'completed' : ''} ${!canEdit ? 'read-only' : ''}`;
+        li.onclick = () => toggleChapter('math', idx);
+        li.innerHTML = `
+          <div class="chapter-left">
+            <span class="chapter-number">${ch.id}.</span>
+            <div class="chapter-checkbox">${ch.done ? '<i class="ph-bold ph-check"></i>' : ''}</div>
+            <span class="chapter-name">${ch.name}</span>
+          </div>
+          <span class="chapter-status-tag ${ch.done ? 'status-done' : 'status-pending'}">
+            ${ch.done ? 'Prepared' : 'Pending'}
+          </span>
+        `;
+        mathList.appendChild(li);
+      });
+
+      // Science
+      student.science.forEach((ch, idx) => {
+        if (ch.done) sciDoneCount++;
+        const li = document.createElement('li');
+        li.className = `chapter-item ${ch.done ? 'completed' : ''} ${!canEdit ? 'read-only' : ''}`;
+        li.onclick = () => toggleChapter('science', idx);
+        li.innerHTML = `
+          <div class="chapter-left">
+            <span class="chapter-number">${ch.id}.</span>
+            <div class="chapter-checkbox">${ch.done ? '<i class="ph-bold ph-check"></i>' : ''}</div>
+            <span class="chapter-name">${ch.name}</span>
+          </div>
+          <span class="chapter-status-tag ${ch.done ? 'status-done' : 'status-pending'}">
+            ${ch.done ? 'Prepared' : 'Pending'}
+          </span>
+        `;
+        sciList.appendChild(li);
+      });
+
+      document.getElementById('math-stat').innerText = `${mathDoneCount} / ${student.math.length} Prepared`;
+      document.getElementById('sci-stat').innerText = `${sciDoneCount} / ${student.science.length} Prepared`;
+
+      const totalChapters = student.math.length + student.science.length;
+      const totalDone = mathDoneCount + sciDoneCount;
+      const percent = Math.round((totalDone / totalChapters) * 100);
+
+      document.getElementById('overall-percentage').innerText = `${percent}%`;
+      document.getElementById('overall-bar').style.width = `${percent}%`;
+    }
+
+    // Startup Load
+    window.addEventListener('load', () => {
+      ['shabd', 'nitish', 'shivansh'].forEach(k => {
+        const saved = localStorage.getItem('classverse_profile_custom_' + k);
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            studentsData[k].badge = parsed.badge;
+            studentsData[k].quote = parsed.quote;
+            studentsData[k].bio = parsed.bio;
+          } catch(e){}
+        }
+        document.getElementById('card-badge-' + k).innerText = studentsData[k].badge;
+        document.getElementById('card-quote-' + k).innerText = studentsData[k].quote;
+        document.getElementById('card-bio-' + k).innerText = studentsData[k].bio;
+      });
+
+      const savedGoal = localStorage.getItem('classverse_goal_text');
+      if (savedGoal) {
+        document.getElementById('goal-pill-text').innerHTML = `<i class="ph-bold ph-sparkle"></i> ${savedGoal}`;
+      }
+
+      const active = localStorage.getItem('classverse_banner_active') === 'true';
+      const text = localStorage.getItem('classverse_banner_text') || "NOTICE: Weekly Math & Science Mock Evaluation this Friday!";
+      if (active) {
+        document.getElementById('leader-live-banner').classList.add('active');
+        document.getElementById('banner-text-display').innerText = text;
+      }
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('theme-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      themeIcon.className = next === 'dark' ? 'ph-bold ph-moon' : 'ph-bold ph-sun';
+    });
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      document.getElementById('scroll-progress').style.width = `${progress}%`;
+    });
+
+    // Mobile Drawer
+    const menuBtn = document.getElementById('menu-btn');
+    const drawer = document.getElementById('mobile-drawer');
+    menuBtn.addEventListener('click', () => drawer.classList.toggle('open'));
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', () => drawer.classList.remove('open'));
+    });
+
+    // Canvas Particles
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    let particles = Array.from({ length: 50 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 0.5,
+      speedX: (Math.random() - 0.5) * 0.4,
+      speedY: (Math.random() - 0.5) * 0.4 - 0.2,
+      opacity: Math.random() * 0.6 + 0.2
+    }));
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.speedX; p.y += p.speedY;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+        ctx.fillStyle = `rgba(147, 197, 253, ${p.opacity})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    }
+    loop();
+  </script>
+</body>
+</html>
